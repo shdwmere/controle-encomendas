@@ -3,6 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../lib/api';
 
+function agoraParaInputLocal() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+// datetime-local vem em hora LOCAL do navegador; o banco grava tudo em UTC
+// (datetime('now') do SQLite é UTC). Converte pra bater certinho.
+function localParaUtcSqlite(valorInputLocal) {
+  const d = new Date(valorInputLocal);
+  return d.toISOString().slice(0, 19).replace('T', ' ');
+}
+
 export function NovaEncomenda() {
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -15,6 +28,7 @@ export function NovaEncomenda() {
   const [destinatario, setDestinatario] = useState('');
   const [quantidade, setQuantidade] = useState(1);
   const [observacao, setObservacao] = useState('');
+  const [dataChegada, setDataChegada] = useState(agoraParaInputLocal());
   const [erro, setErro] = useState('');
   const [salvando, setSalvando] = useState(false);
 
@@ -59,6 +73,7 @@ export function NovaEncomenda() {
         destinatario,
         quantidade: Number(quantidade) || 1,
         observacao: observacao || null,
+        data_recebimento: localParaUtcSqlite(dataChegada),
       });
       navigate('/');
     } catch (err) {
@@ -104,6 +119,16 @@ export function NovaEncomenda() {
         <label>
           Destinatário (nome no pacote)
           <input value={destinatario} onChange={(e) => setDestinatario(e.target.value)} required />
+        </label>
+
+        <label>
+          Data e hora de chegada
+          <input
+            type="datetime-local"
+            value={dataChegada}
+            onChange={(e) => setDataChegada(e.target.value)}
+            required
+          />
         </label>
 
         <label>

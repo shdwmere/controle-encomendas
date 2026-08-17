@@ -10,6 +10,7 @@ export function NavBar() {
       <div className="navbar-links">
         <NavLink to="/" end>Pendentes</NavLink>
         <NavLink to="/nova">Nova encomenda</NavLink>
+        <NavLink to="/historico">Histórico</NavLink>
         <NavLink to="/moradores">Moradores</NavLink>
       </div>
       <div className="navbar-user">

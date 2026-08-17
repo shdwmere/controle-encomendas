@@ -22,13 +22,16 @@ router.get('/', (req, res) => {
     query += ' WHERE e.status = ?';
     params.push(status);
   }
-  query += ' ORDER BY e.data_recebimento ASC';
+
+  // pendente: mais antigo primeiro (o que precisa de atenção primeiro).
+  // entregue (arquivo): mais recente primeiro (o que você acabou de processar).
+  query += status === 'ENTREGUE' ? ' ORDER BY e.data_entrega DESC' : ' ORDER BY e.data_recebimento ASC';
 
   res.json(db.prepare(query).all(...params));
 });
 
 router.post('/', (req, res) => {
-  const { id_morador, destinatario, quantidade, observacao } = req.body;
+  const { id_morador, destinatario, quantidade, observacao, data_recebimento } = req.body;
 
   if (!id_morador || !destinatario) {
     return res.status(400).json({ erro: 'id_morador e destinatario são obrigatórios' });
@@ -38,8 +41,8 @@ router.post('/', (req, res) => {
   db.prepare(`
     INSERT INTO encomendas
       (id_encomenda, id_morador, destinatario, data_recebimento, quantidade, observacao, status)
-    VALUES (?, ?, ?, datetime('now'), ?, ?, 'PENDENTE')
-  `).run(id_encomenda, id_morador, destinatario, quantidade || 1, observacao || null);
+    VALUES (?, ?, ?, COALESCE(?, datetime('now')), ?, ?, 'PENDENTE')
+  `).run(id_encomenda, id_morador, destinatario, data_recebimento || null, quantidade || 1, observacao || null);
 
   res.status(201).json({ id_encomenda });
 });

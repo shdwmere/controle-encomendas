@@ -5,21 +5,21 @@ import { NavBar } from './components/NavBar';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { NovaEncomenda } from './pages/NovaEncomenda';
+import { Historico } from './pages/Historico';
 import { Moradores } from './pages/Moradores';
-
 
 function Layout({ children }) {
   const { token } = useAuth();
   return (
     <>
-     {token && <NavBar />}
-     <main>{children}</main>
+      {token && <NavBar />}
+      <main>{children}</main>
     </>
   );
 }
 
 export default function App() {
-  return(
+  return (
     <AuthProvider>
       <BrowserRouter>
         <Layout>
@@ -38,6 +38,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <NovaEncomenda />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/historico"
+              element={
+                <ProtectedRoute>
+                  <Historico />
                 </ProtectedRoute>
               }
             />

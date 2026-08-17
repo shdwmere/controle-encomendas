@@ -349,6 +349,67 @@ button:disabled {
   width: 100%;
 }
 
+.combobox-wrapper {
+  position: relative;
+}
+
+.sugestoes {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 4px;
+  list-style: none;
+  background: white;
+  border: 1px solid #d3d6d9;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.sugestoes li {
+  padding: 9px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sugestoes li:hover {
+  background: var(--graphite-100);
+}
+
+.sugestao-vazia {
+  color: #6b7178;
+  cursor: default;
+}
+
+.sugestao-vazia:hover {
+  background: none;
+}
+
+.hint-ok {
+  color: var(--teal);
+  margin: -6px 0 0;
+}
+
+.badge-neutro {
+  background: var(--graphite-100);
+  color: #6b7178;
+}
+
+.card-arquivada {
+  border-left-color: var(--teal);
+  opacity: 0.9;
+}
+
+.input-busca {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
 /* tabela */
 .tabela {
   width: 100%;
@@ -373,21 +434,4 @@ button:disabled {
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: #6b7178;
-}
-
-.sugestoes {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.sugestoes li {
-  background: #7D0006;
-  color: white;
-  font-size: 1rem;
-  border: 2px solid gray;
-  border-radius: 15px;
-  padding: 15px;
-  display: flex;
-  width: 50%;
 }
