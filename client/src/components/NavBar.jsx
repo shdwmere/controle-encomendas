@@ -11,7 +11,7 @@ export function NavBar() {
       </div>
       <div className="navbar-links">
         <NavLink to="/" end>Pendentes</NavLink>
-        <NavLink to="/nova">Nova encomenda</NavLink>
+        <NavLink to="/nova">Registrar</NavLink>
         <NavLink to="/historico">Histórico</NavLink>
         <NavLink to="/moradores">Moradores</NavLink>
       </div>

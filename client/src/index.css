@@ -140,6 +140,7 @@ main {
 
 .navbar-user {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
   font-size: 13px;
@@ -169,7 +170,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% -10%, #2a3138 0%, var(--graphite-900) 55%, #14171a 100%);
   padding: 24px;
 }
 
@@ -476,6 +476,7 @@ button:disabled {
 
 .form-linha {
   display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
@@ -513,7 +514,7 @@ button:disabled {
 }
 
 .btn-link:hover {
-  color: var(--graphite-900);
+  color: '#fff';
 }
 
 .btn-link-cancelar {
@@ -703,4 +704,4 @@ button:disabled {
   }
 }
 
-.navbar-logo { height: 100px; width: auto; border-radius: 60px }
+.navbar-logo { height: 50px; width: auto; border-radius: 60px }
