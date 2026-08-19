@@ -1,7 +1,10 @@
 {
-  "name": "controle-encomendas-server",
+  "name": "server-encomendas",
   "version": "1.0.0",
   "type": "module",
+  "bin": {
+    "server-encomendas": "./index.js"
+  },
   "description": "",
   "scripts": {
     "start": "node index.js",
