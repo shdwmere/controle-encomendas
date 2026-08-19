@@ -6,7 +6,9 @@ export function NavBar() {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">Portaria Moringa</div>
+      <div className="navbar-brand">
+        <img src="/moringa-logo.png" alt="Portaria Moringa" className="navbar-logo" />
+      </div>
       <div className="navbar-links">
         <NavLink to="/" end>Pendentes</NavLink>
         <NavLink to="/nova">Nova encomenda</NavLink>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../lib/api';
 
@@ -22,6 +22,7 @@ function linkWhatsapp(telefone, destinatario, casa) {
 export function Dashboard() {
   const { token } = useAuth();
   const [encomendas, setEncomendas] = useState([]);
+  const [busca, setBusca] = useState('');
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
@@ -46,6 +47,16 @@ export function Dashboard() {
   useEffect(() => {
     carregar();
   }, []);
+
+  const filtradas = useMemo(() => {
+    const termo = busca.trim().toLowerCase();
+    if (!termo) return encomendas;
+    return encomendas.filter(
+      (e) =>
+        e.casa.toLowerCase().includes(termo) ||
+        e.nome_morador.toLowerCase().includes(termo)
+    );
+  }, [busca, encomendas]);
 
   async function handleEntregar(id) {
     try {
@@ -94,12 +105,25 @@ export function Dashboard() {
         <span className="badge">{encomendas.length}</span>
       </div>
 
+      {encomendas.length > 0 && (
+        <input
+          className="input-busca"
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          placeholder="buscar por casa ou morador"
+        />
+      )}
+
       {encomendas.length === 0 && (
         <p className="msg">nenhuma encomenda pendente. portaria em dia.</p>
       )}
 
+      {encomendas.length > 0 && filtradas.length === 0 && (
+        <p className="msg">nenhuma encomenda encontrada para "{busca}".</p>
+      )}
+
       <div className="lista-encomendas">
-        {encomendas.map((e) =>
+        {filtradas.map((e) =>
           editandoId === e.id_encomenda ? (
             <div key={e.id_encomenda} className="card-encomenda card-edicao">
               <label>

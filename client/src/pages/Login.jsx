@@ -27,6 +27,7 @@ export function Login() {
   return (
     <div className="login-page">
       <form className="login-card" onSubmit={handleSubmit}>
+        <img src="/moringa-logo.png" alt="Portaria Moringa" className="login-logo" />
         <h1>Controle de encomendas</h1>
         <p className="subtitle">Condomínio Moringa</p>
 
