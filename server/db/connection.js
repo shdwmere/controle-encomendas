@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const db = new DatabaseSync(path.join(__dirname, 'encomendas.db'));
 db.exec('PRAGMA journal_mode = WAL');
-db.exec('PRAGMA foreign_mode = ON');
+db.exec('PRAGMA foreign_keys = ON');
 
 const schema = readFileSync(path.join(__dirname, 'schema.sql'), 'utf-8');
 db.exec(schema);
