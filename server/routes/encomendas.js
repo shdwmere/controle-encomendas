@@ -30,6 +30,7 @@ router.get('/', (req, res) => {
   res.json(db.prepare(query).all(...params));
 });
 
+// registra uma nova encomenda
 router.post('/', (req, res) => {
   const { id_morador, destinatario, quantidade, observacao, data_recebimento } = req.body;
 
@@ -47,6 +48,7 @@ router.post('/', (req, res) => {
   res.status(201).json({ id_encomenda });
 });
 
+// seta uma encomenda como entregue
 router.patch('/:id/entregar', (req, res) => {
   const result = db.prepare(`
     UPDATE encomendas
@@ -61,8 +63,9 @@ router.patch('/:id/entregar', (req, res) => {
   res.json({ ok: true });
 });
 
+// altera uma encomenda
 router.patch('/:id', (req, res) => {
-  const { destinatario, quantidade, observacao } = req.body;
+  const { destinatario, quantidade, observacao, data_recebimento } = req.body;
 
   if (!destinatario) {
     return res.status(400).json({ erro: 'destinatario é obrigatório' });
@@ -70,9 +73,9 @@ router.patch('/:id', (req, res) => {
 
   const result = db.prepare(`
     UPDATE encomendas
-    SET destinatario = ?, quantidade = ?, observacao = ?
+    SET destinatario = ?, quantidade = ?, observacao = ?, data_recebimento = ?
     WHERE id_encomenda = ?
-  `).run(destinatario, quantidade || 1, observacao || null, req.params.id);
+  `).run(destinatario, quantidade || 1, observacao || null, req.params.id, data_recebimento);
 
   if (result.changes === 0) {
     return res.status(404).json({ erro: 'encomenda não encontrada' });
@@ -81,6 +84,7 @@ router.patch('/:id', (req, res) => {
   res.json({ ok: true });
 });
 
+// busca encomendas
 router.get('/:id', (req, res) => {
   const encomenda = db.prepare(`
     SELECT e.*, m.casa, m.nome AS nome_morador, m.telefone
@@ -91,6 +95,17 @@ router.get('/:id', (req, res) => {
 
   if (!encomenda) return res.status(404).json({ erro: 'encomenda não encontrada' });
   res.json(encomenda);
+});
+
+// deleta encomenda
+router.delete('/:id', (req,res) => {
+  const result = db.prepare('DELETE FROM encomendas where id_encomenda = ?').run(req.params.id);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ erro: 'encomenda não encontrada' });
+  }
+
+  res.json(204).end();
 });
 
 export default router;

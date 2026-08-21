@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.1.100:3001/api';
+// client/src/lib/api.js
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' };
@@ -50,4 +51,6 @@ export const api = {
     request(`/encomendas/${id}`, { method: 'PATCH', body: encomenda, token }),
   marcarEntregue: (token, id) =>
     request(`/encomendas/${id}/entregar`, { method: 'PATCH', token }),
+  deletarEncomenda: (token, id) =>
+    request(`/encomendas/${id}`, { method: 'DELETE', token }),
 };

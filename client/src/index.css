@@ -324,7 +324,6 @@ button:disabled {
   border: 1.5px solid var(--amber);
   padding: 3px 11px;
   border-radius: 5px;
-  transform: rotate(-3deg);
 }
 
 /* cards de encomenda — ticket de portaria, com furos de picote */
@@ -379,14 +378,20 @@ button:disabled {
   margin-bottom: 8px;
 }
 
+.data-e-hora-chegada {
+  font-size: 1rem;
+  color: var(--graphite-600);
+}
+
 .casa {
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--graphite-900);
 }
 
 .destinatario {
   font-family: var(--display);
-  font-size: 16.5px;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--graphite-900);
   margin: 0;
@@ -403,6 +408,7 @@ button:disabled {
   gap: 6px;
   flex-wrap: wrap;
   margin-bottom: 12px;
+  margin-top: 8px;
 }
 
 .tag {
@@ -434,8 +440,17 @@ button:disabled {
   background: var(--teal);
 }
 
+.btn-danger {
+  flex: 1;
+  background: #aa3232;
+}
+
 .btn-primario:hover:not(:disabled) {
   background: #195f49;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #721c1c;
 }
 
 .btn-secundario {
@@ -459,6 +474,12 @@ button:disabled {
 .btn-secundario:hover {
   border-color: var(--graphite-900);
   background: var(--graphite-100);
+  color: var(--graphite-100);
+}
+
+.btn-secundario a {
+  text-decoration: none;
+  color: var(--graphite-900);
 }
 
 /* forms de página */
@@ -618,6 +639,63 @@ button:disabled {
 
 .card-arquivada:hover {
   opacity: 1;
+}
+
+/* modal de confirmação */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 32, 36, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+  animation: modal-fade 0.15s var(--ease);
+}
+
+.modal-confirmacao {
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+  border-top: 4px solid var(--amber);
+  padding: 26px 24px 22px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: modal-pop 0.18s var(--ease);
+}
+
+.modal-confirmacao h2 {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--graphite-900);
+}
+
+.modal-confirmacao p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+
+.modal-confirmacao strong {
+  color: var(--graphite-900);
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .input-busca {
